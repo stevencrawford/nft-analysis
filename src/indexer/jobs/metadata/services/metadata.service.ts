@@ -4,7 +4,6 @@ import { InjectMetadataProducer } from '../decorators/metadata-producer.decorato
 import {
   ATTRIBUTE_SUMMARY,
   COLLECTION_METADATA,
-  COMPUTE_RARITY,
   METADATA_REFRESH,
   TOKEN_ATTRIBUTES,
 } from '../constants/metadata.constant';
@@ -39,12 +38,10 @@ export class MetadataService {
       data,
       queueName: METADATA_REFRESH,
       children: [
-        createChild(COMPUTE_RARITY, data, [
-          ...[ATTRIBUTE_SUMMARY, TOKEN_ATTRIBUTES].map((queue) =>
-            createChild(queue, data),
-          ),
+        createChild(ATTRIBUTE_SUMMARY, data, [
+          createChild(COLLECTION_METADATA, data),
         ]),
-        createChild(COLLECTION_METADATA, data),
+        createChild(TOKEN_ATTRIBUTES, data),
       ],
       opts: {
         failParentOnFailure: true,

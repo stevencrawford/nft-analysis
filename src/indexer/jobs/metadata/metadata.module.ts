@@ -5,13 +5,11 @@ import { MetadataService } from './services/metadata.service';
 import { MetadataController } from './controllers/metadata.controller';
 import { ProvidersModule } from '../../providers/providers.module';
 import { AttributeSummaryProcessor } from './processors/attribute-summary.processor';
-import { ComputeRarityProcessor } from './processors/compute-rarity.processor';
 import { CollectionMetadataProcessor } from './processors/collection-metadata.processor';
 import { TokenAttributesProcessor } from './processors/token-attributes.processor';
 import {
   ATTRIBUTE_SUMMARY,
   COLLECTION_METADATA,
-  COMPUTE_RARITY,
   METADATA_PRODUCER,
   METADATA_REFRESH,
   TOKEN_ATTRIBUTES,
@@ -22,7 +20,6 @@ import {
     ...[
       METADATA_REFRESH,
       COLLECTION_METADATA,
-      COMPUTE_RARITY,
       ATTRIBUTE_SUMMARY,
       TOKEN_ATTRIBUTES,
     ].map((queue) =>
@@ -40,7 +37,6 @@ import {
     CollectionMetadataProcessor,
     AttributeSummaryProcessor,
     TokenAttributesProcessor,
-    ComputeRarityProcessor,
     MetadataService,
   ],
   controllers: [MetadataController],
