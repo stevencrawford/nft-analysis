@@ -1,6 +1,21 @@
-export const METADATA_PRODUCER = 'metadata-producer';
-export const ATTRIBUTE_SUMMARY = 'attribute-summary';
-export const TOKEN_ATTRIBUTES = 'token-attributes';
-export const COMPUTE_RARITY = 'compute-rarity';
-export const COLLECTION_METADATA = 'collection-metadata';
-export const METADATA_REFRESH = 'metadata-refresh';
+const metadataQueues = [
+  'attribute-summary',
+  'token-attributes',
+  'compute-rarity',
+  'collection-metadata',
+  'metadata-refresh',
+] as const;
+
+const metadataFlows = ['metadata-producer'] as const;
+
+export type MetadataQueues = (typeof metadataQueues)[number];
+
+export const [
+  ATTRIBUTE_SUMMARY,
+  TOKEN_ATTRIBUTES,
+  COMPUTE_RARITY,
+  COLLECTION_METADATA,
+  METADATA_REFRESH,
+] = metadataQueues;
+
+export const [METADATA_PRODUCER] = metadataFlows;

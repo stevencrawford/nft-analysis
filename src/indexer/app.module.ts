@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { RedisModule } from '@songkeys/nestjs-redis';
 import { BullModule } from '@nestjs/bullmq';
-import { SalesHistoryModule } from './jobs/sales-history/sales-history.module';
+import { SalesModule } from './jobs/sales/sales.module';
 import { MetadataModule } from './jobs/metadata/metadata.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import config, { Config, RedisConfig } from './common/config/config';

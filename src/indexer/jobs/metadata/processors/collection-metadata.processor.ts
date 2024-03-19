@@ -5,8 +5,8 @@ import { ContractJob } from '../interfaces/metadata.interface';
 import { WorkerHostProcessor } from './worker-host.processor';
 import { Logger } from '@nestjs/common';
 import { ReservoirService } from '../../../providers/reservoir/services/reservoir.service';
-import { CollectionMetadataResponse } from '../../../providers/reservoir/interfaces/reservoir.interface';
 import { MetadataService } from '../services/metadata.service';
+import { Collection } from '../../../providers/common/interfaces/web3-provider.interface';
 
 @Processor(COLLECTION_METADATA)
 export class CollectionMetadataProcessor extends WorkerHostProcessor {
@@ -19,22 +19,20 @@ export class CollectionMetadataProcessor extends WorkerHostProcessor {
     super();
   }
 
-  async process(job: Job<ContractJob>): Promise<CollectionMetadataResponse> {
-    const contractMetadata = await this.reservoirService.getContractMetadata(
-      job.data.contract,
-    );
+  async process(job: Job<ContractJob>): Promise<Collection> {
+    const contractMetadata =
+      await this.reservoirService.getNftCollectionMetadata(job.data.contract);
 
     this.logger.log(`Contract Metadata for ${job.data.contract}:`);
-    if (contractMetadata.collections[0]) {
-      const contract = contractMetadata.collections[0];
-      this.logger.log(`Symbol: ${contract.symbol}:`);
-      this.logger.log(`Total Supply: ${contract.tokenCount}:`);
+    if (contractMetadata) {
+      this.logger.log(`Symbol: ${contractMetadata.symbol}`);
+      this.logger.log(`Total Supply: ${contractMetadata.totalSupply}:`);
 
       await this.metadataService.addContract(
-        `collections:${contract.id}:metadata`,
+        `collections:${contractMetadata.address}:metadata`,
         {
-          ...contract,
-          raw: JSON.stringify(contract),
+          ...contractMetadata,
+          raw: JSON.stringify(contractMetadata),
         },
       );
     }

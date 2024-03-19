@@ -15,6 +15,11 @@ export class AttributeSummaryProcessor extends WorkerHostProcessor {
   }
 
   async process(job: Job<ContractJob>): Promise<any> {
-    return await this.alchemyService.summarizeNFTAttributes(job.data.contract);
+    const traits = await this.alchemyService.getNftCollectionTraits(
+      job.data.contract,
+      10000,
+    );
+    this.logger.log(traits);
+    return traits;
   }
 }

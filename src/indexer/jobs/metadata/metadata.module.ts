@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { defaultJobOptions } from '../../common/utils/default-job-options';
+import { defaultJobOptions } from '../utils/default-job-options';
 import { MetadataService } from './services/metadata.service';
 import { MetadataController } from './controllers/metadata.controller';
 import { ProvidersModule } from '../../providers/providers.module';
@@ -13,12 +13,14 @@ import {
   COLLECTION_METADATA,
   COMPUTE_RARITY,
   METADATA_PRODUCER,
+  METADATA_REFRESH,
   TOKEN_ATTRIBUTES,
 } from './constants/metadata.constant';
 
 @Module({
   imports: [
     ...[
+      METADATA_REFRESH,
       COLLECTION_METADATA,
       COMPUTE_RARITY,
       ATTRIBUTE_SUMMARY,
